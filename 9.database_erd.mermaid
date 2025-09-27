@@ -1,0 +1,125 @@
+erDiagram
+    MEMBERS {
+        BIGINT member_id PK "자동증가 기본키"
+        VARCHAR email UK "이메일 (로그인 ID)"
+        VARCHAR password "암호화된 비밀번호"
+        VARCHAR name "사용자명"
+        VARCHAR phone "전화번호"
+        VARCHAR address "주소"
+        DATETIME join_date "가입일시"
+        ENUM member_type "회원 등급"
+        ENUM status "회원 상태"
+        ENUM role "권한"
+        INTEGER max_rental_books "최대 대출 권수"
+        DATETIME created_at "생성일시"
+        DATETIME updated_at "수정일시"
+    }
+    
+    BOOKS {
+        BIGINT book_id PK "도서 ID"
+        VARCHAR isbn "ISBN"
+        VARCHAR title "도서명"
+        VARCHAR author "저자"
+        VARCHAR publisher "출판사"
+        DATE publish_date "출간일"
+        TEXT description "도서 설명"
+        INTEGER total_copies "총 보유 수량"
+        INTEGER available_copies "대출 가능 수량"
+        ENUM status "도서 상태"
+        BIGINT category_id FK "카테고리 ID"
+        DATETIME created_at "등록일시"
+        DATETIME updated_at "수정일시"
+    }
+    
+    CATEGORIES {
+        BIGINT category_id PK "카테고리 ID"
+        VARCHAR name "카테고리명"
+        VARCHAR description "설명"
+        DATETIME created_at "생성일시"
+        DATETIME updated_at "수정일시"
+    }
+    
+    RENTALS {
+        BIGINT rental_id PK "대출 ID"
+        BIGINT member_id FK "회원 ID"
+        BIGINT book_id FK "도서 ID"
+        DATE rental_date "대출일"
+        DATE due_date "반납 예정일"
+        DATE return_date "실제 반납일"
+        ENUM status "대출 상태"
+        INTEGER renewal_count "연장 횟수"
+        DATETIME created_at "생성일시"
+        DATETIME updated_at "수정일시"
+    }
+    
+    RESERVATIONS {
+        BIGINT reservation_id PK "예약 ID"
+        BIGINT member_id FK "회원 ID"
+        BIGINT book_id FK "도서 ID"
+        DATE reservation_date "예약일"
+        DATE expiry_date "예약 만료일"
+        ENUM status "예약 상태"
+        INTEGER queue_position "대기 순번"
+        DATETIME created_at "생성일시"
+        DATETIME updated_at "수정일시"
+    }
+    
+    REVIEWS {
+        BIGINT review_id PK "리뷰 ID"
+        BIGINT member_id FK "회원 ID"
+        BIGINT book_id FK "도서 ID"
+        INTEGER rating "평점 (1-5)"
+        TEXT content "리뷰 내용"
+        DATETIME created_at "작성일시"
+        DATETIME updated_at "수정일시"
+    }
+    
+    %% 관계 정의
+    MEMBERS ||--o{ RENTALS : "대출"
+    MEMBERS ||--o{ RESERVATIONS : "예약"
+    MEMBERS ||--o{ REVIEWS : "리뷰 작성"
+    
+    BOOKS ||--o{ RENTALS : "대출됨"
+    BOOKS ||--o{ RESERVATIONS : "예약됨"
+    BOOKS ||--o{ REVIEWS : "리뷰 받음"
+    BOOKS }o--|| CATEGORIES : "분류됨"
+    
+    %% 열거형 값들 설명
+    MEMBER_TYPE_ENUM {
+        VARCHAR REGULAR "일반 회원 (3권)"
+        VARCHAR SILVER "실버 회원 (5권)"
+        VARCHAR GOLD "골드 회원 (7권)"
+        VARCHAR VIP "VIP 회원 (10권)"
+    }
+    
+    MEMBER_STATUS_ENUM {
+        VARCHAR ACTIVE "활성 상태"
+        VARCHAR SUSPENDED "정지 상태"
+        VARCHAR WITHDRAWN "탈퇴 상태"
+    }
+    
+    ROLE_ENUM {
+        VARCHAR USER "일반 사용자"
+        VARCHAR ADMIN "관리자"
+    }
+    
+    RENTAL_STATUS_ENUM {
+        VARCHAR RENTED "대출 중"
+        VARCHAR RETURNED "반납 완료"
+        VARCHAR OVERDUE "연체"
+        VARCHAR LOST "분실"
+    }
+    
+    RESERVATION_STATUS_ENUM {
+        VARCHAR WAITING "대기 중"
+        VARCHAR READY "대출 준비"
+        VARCHAR EXPIRED "만료됨"
+        VARCHAR CANCELLED "취소됨"
+    }
+    
+    BOOK_STATUS_ENUM {
+        VARCHAR AVAILABLE "대출 가능"
+        VARCHAR MAINTENANCE "정비 중"
+        VARCHAR LOST "분실"
+        VARCHAR DAMAGED "손상"
+    }

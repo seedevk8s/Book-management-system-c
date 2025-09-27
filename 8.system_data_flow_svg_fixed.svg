@@ -1,0 +1,358 @@
+<svg width="1600" height="1200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 -->
+  <rect width="1600" height="1200" fill="#f8f9fa"/>
+  
+  <!-- 제목 -->
+  <text x="800" y="30" text-anchor="middle" font-size="24" font-weight="bold" fill="#2c3e50">
+    전체 시스템 데이터 플로우
+  </text>
+  
+  <!-- 사용자 레이어 -->
+  <g transform="translate(50, 80)">
+    <rect x="0" y="0" width="200" height="100" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" rx="10"/>
+    <text x="100" y="15" text-anchor="middle" font-size="14" font-weight="bold" fill="#1976d2">
+      👥 사용자 레이어
+    </text>
+    
+    <circle cx="60" cy="50" r="20" fill="#2196f3"/>
+    <text x="60" y="55" text-anchor="middle" font-size="10" fill="white" font-weight="bold">👤 사용자</text>
+    
+    <circle cx="140" cy="50" r="20" fill="#2196f3"/>
+    <text x="140" y="55" text-anchor="middle" font-size="10" fill="white" font-weight="bold">🌐 브라우저</text>
+  </g>
+  
+  <!-- 프레젠테이션 레이어 -->
+  <g transform="translate(300, 80)">
+    <rect x="0" y="0" width="300" height="150" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="10"/>
+    <text x="150" y="15" text-anchor="middle" font-size="14" font-weight="bold" fill="#7b1fa2">
+      🎯 프레젠테이션 레이어
+    </text>
+    
+    <rect x="20" y="30" width="80" height="40" fill="#9c27b0" stroke="#7b1fa2" stroke-width="1" rx="5"/>
+    <text x="60" y="45" text-anchor="middle" font-size="9" fill="white" font-weight="bold">🔐 Auth</text>
+    <text x="60" y="58" text-anchor="middle" font-size="9" fill="white" font-weight="bold">Controller</text>
+    
+    <rect x="110" y="30" width="80" height="40" fill="#9c27b0" stroke="#7b1fa2" stroke-width="1" rx="5"/>
+    <text x="150" y="45" text-anchor="middle" font-size="9" fill="white" font-weight="bold">👥 Member</text>
+    <text x="150" y="58" text-anchor="middle" font-size="9" fill="white" font-weight="bold">Controller</text>
+    
+    <rect x="200" y="30" width="80" height="40" fill="#9c27b0" stroke="#7b1fa2" stroke-width="1" rx="5"/>
+    <text x="240" y="45" text-anchor="middle" font-size="9" fill="white" font-weight="bold">🏠 Home</text>
+    <text x="240" y="58" text-anchor="middle" font-size="9" fill="white" font-weight="bold">Controller</text>
+    
+    <!-- 요청 URL 표시 -->
+    <text x="20" y="90" font-size="8" fill="#7b1fa2">GET/POST /auth/**</text>
+    <text x="110" y="90" font-size="8" fill="#7b1fa2">GET/POST /member/**</text>
+    <text x="200" y="90" font-size="8" fill="#7b1fa2">GET /, /home</text>
+  </g>
+  
+  <!-- Spring Security 레이어 -->
+  <g transform="translate(650, 80)">
+    <rect x="0" y="0" width="400" height="300" fill="#ffebee" stroke="#d32f2f" stroke-width="2" rx="10"/>
+    <text x="200" y="15" text-anchor="middle" font-size="14" font-weight="bold" fill="#d32f2f">
+      🛡️ Spring Security 레이어
+    </text>
+    
+    <!-- Security Filter Chain -->
+    <rect x="20" y="30" width="160" height="50" fill="#f44336" stroke="#d32f2f" stroke-width="1" rx="5"/>
+    <text x="100" y="45" text-anchor="middle" font-size="11" fill="white" font-weight="bold">🔒 Security</text>
+    <text x="100" y="60" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Filter Chain</text>
+    
+    <!-- 인증 컴포넌트 -->
+    <rect x="200" y="30" width="180" height="120" fill="#ffcdd2" stroke="#e57373" stroke-width="1" rx="5"/>
+    <text x="290" y="45" text-anchor="middle" font-size="11" fill="#c62828" font-weight="bold">인증 컴포넌트</text>
+    
+    <rect x="210" y="55" width="70" height="25" fill="#e57373" stroke="#d32f2f" stroke-width="1" rx="3"/>
+    <text x="245" y="70" text-anchor="middle" font-size="8" fill="white">🔑 Auth Provider</text>
+    
+    <rect x="290" y="55" width="80" height="25" fill="#e57373" stroke="#d32f2f" stroke-width="1" rx="3"/>
+    <text x="330" y="70" text-anchor="middle" font-size="8" fill="white">👤 UserDetails Service</text>
+    
+    <rect x="210" y="90" width="70" height="25" fill="#e57373" stroke="#d32f2f" stroke-width="1" rx="3"/>
+    <text x="245" y="105" text-anchor="middle" font-size="8" fill="white">🔐 Password Encoder</text>
+    
+    <rect x="290" y="90" width="80" height="25" fill="#e57373" stroke="#d32f2f" stroke-width="1" rx="3"/>
+    <text x="330" y="105" text-anchor="middle" font-size="8" fill="white">🎫 Auth Manager</text>
+    
+    <!-- 핸들러 -->
+    <rect x="20" y="100" width="160" height="120" fill="#ffcdd2" stroke="#e57373" stroke-width="1" rx="5"/>
+    <text x="100" y="115" text-anchor="middle" font-size="11" fill="#c62828" font-weight="bold">핸들러</text>
+    
+    <rect x="30" y="125" width="60" height="25" fill="#4caf50" stroke="#388e3c" stroke-width="1" rx="3"/>
+    <text x="60" y="140" text-anchor="middle" font-size="8" fill="white">✅ Success</text>
+    
+    <rect x="100" y="125" width="60" height="25" fill="#f44336" stroke="#d32f2f" stroke-width="1" rx="3"/>
+    <text x="130" y="140" text-anchor="middle" font-size="8" fill="white">❌ Failure</text>
+    
+    <rect x="30" y="160" width="60" height="25" fill="#795548" stroke="#5d4037" stroke-width="1" rx="3"/>
+    <text x="60" y="175" text-anchor="middle" font-size="8" fill="white">🚪 Logout</text>
+    
+    <rect x="100" y="160" width="60" height="25" fill="#607d8b" stroke="#455a64" stroke-width="1" rx="3"/>
+    <text x="130" y="175" text-anchor="middle" font-size="8" fill="white">🔓 Logout Success</text>
+    
+    <!-- 세션 관리 -->
+    <rect x="20" y="240" width="160" height="40" fill="#ff9800" stroke="#f57c00" stroke-width="1" rx="5"/>
+    <text x="100" y="255" text-anchor="middle" font-size="10" fill="white" font-weight="bold">📊 세션 관리</text>
+    <text x="100" y="270" text-anchor="middle" font-size="8" fill="white">세션 생성/무효화, 쿠키 관리</text>
+  </g>
+  
+  <!-- 비즈니스 레이어 -->
+  <g transform="translate(1100, 80)">
+    <rect x="0" y="0" width="250" height="150" fill="#e8f5e8" stroke="#388e3c" stroke-width="2" rx="10"/>
+    <text x="125" y="15" text-anchor="middle" font-size="14" font-weight="bold" fill="#388e3c">
+      💼 비즈니스 레이어
+    </text>
+    
+    <rect x="20" y="30" width="90" height="60" fill="#4caf50" stroke="#388e3c" stroke-width="1" rx="5"/>
+    <text x="65" y="50" text-anchor="middle" font-size="10" fill="white" font-weight="bold">👥 Member</text>
+    <text x="65" y="65" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Service</text>
+    
+    <rect x="130" y="30" width="100" height="60" fill="#4caf50" stroke="#388e3c" stroke-width="1" rx="5"/>
+    <text x="180" y="45" text-anchor="middle" font-size="9" fill="white" font-weight="bold">🔍 Custom</text>
+    <text x="180" y="58" text-anchor="middle" font-size="9" fill="white" font-weight="bold">UserDetails</text>
+    <text x="180" y="71" text-anchor="middle" font-size="9" fill="white" font-weight="bold">Service</text>
+    
+    <!-- 비즈니스 로직 표시 -->
+    <text x="20" y="110" font-size="8" fill="#2e7d32">• 회원가입 처리</text>
+    <text x="20" y="125" font-size="8" fill="#2e7d32">• 비밀번호 암호화</text>
+    <text x="20" y="140" font-size="8" fill="#2e7d32">• 사용자 인증</text>
+  </g>
+  
+  <!-- 데이터 접근 레이어 -->
+  <g transform="translate(1400, 80)">
+    <rect x="0" y="0" width="150" height="150" fill="#fff3e0" stroke="#f57c00" stroke-width="2" rx="10"/>
+    <text x="75" y="15" text-anchor="middle" font-size="14" font-weight="bold" fill="#f57c00">
+      💾 데이터 접근
+    </text>
+    
+    <rect x="20" y="30" width="110" height="40" fill="#ff9800" stroke="#f57c00" stroke-width="1" rx="5"/>
+    <text x="75" y="45" text-anchor="middle" font-size="10" fill="white" font-weight="bold">📚 Member</text>
+    <text x="75" y="58" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Repository</text>
+    
+    <rect x="20" y="80" width="110" height="40" fill="#ff9800" stroke="#f57c00" stroke-width="1" rx="5"/>
+    <text x="75" y="95" text-anchor="middle" font-size="10" fill="white" font-weight="bold">🔧 JPA</text>
+    <text x="75" y="108" text-anchor="middle" font-size="10" fill="white" font-weight="bold">Hibernate</text>
+  </g>
+  
+  <!-- 데이터베이스 -->
+  <g transform="translate(700, 420)">
+    <rect x="0" y="0" width="200" height="100" fill="#f1f8e9" stroke="#689f38" stroke-width="2" rx="10"/>
+    <text x="100" y="15" text-anchor="middle" font-size="14" font-weight="bold" fill="#689f38">
+      🗄️ 데이터베이스
+    </text>
+    
+    <circle cx="100" cy="60" r="30" fill="#8bc34a" stroke="#689f38" stroke-width="2"/>
+    <text x="100" y="55" text-anchor="middle" font-size="12" fill="white" font-weight="bold">💽 MySQL</text>
+    <text x="100" y="70" text-anchor="middle" font-size="10" fill="white">securitydb</text>
+  </g>
+  
+  <!-- 도메인 모델 -->
+  <g transform="translate(950, 420)">
+    <rect x="0" y="0" width="400" height="200" fill="#fce4ec" stroke="#ad1457" stroke-width="2" rx="10"/>
+    <text x="200" y="15" text-anchor="middle" font-size="14" font-weight="bold" fill="#ad1457">
+      📋 도메인 모델
+    </text>
+    
+    <!-- Member Entity -->
+    <rect x="20" y="30" width="120" height="80" fill="#e91e63" stroke="#ad1457" stroke-width="1" rx="5"/>
+    <text x="80" y="45" text-anchor="middle" font-size="11" fill="white" font-weight="bold">👤 Member Entity</text>
+    <text x="80" y="60" text-anchor="middle" font-size="9" fill="white">(UserDetails 구현)</text>
+    <text x="80" y="75" text-anchor="middle" font-size="8" fill="white">• id, email, password</text>
+    <text x="80" y="88" text-anchor="middle" font-size="8" fill="white">• name, phone, address</text>
+    <text x="80" y="101" text-anchor="middle" font-size="8" fill="white">• role, status, type</text>
+    
+    <!-- Enums -->
+    <rect x="160" y="30" width="70" height="50" fill="#9c27b0" stroke="#7b1fa2" stroke-width="1" rx="5"/>
+    <text x="195" y="45" text-anchor="middle" font-size="10" fill="white" font-weight="bold">🏷️ Role</text>
+    <text x="195" y="58" text-anchor="middle" font-size="8" fill="white">USER</text>
+    <text x="195" y="71" text-anchor="middle" font-size="8" fill="white">ADMIN</text>
+    
+    <rect x="250" y="30" width="70" height="50" fill="#9c27b0" stroke="#7b1fa2" stroke-width="1" rx="5"/>
+    <text x="285" y="45" text-anchor="middle" font-size="10" fill="white" font-weight="bold">📊 Status</text>
+    <text x="285" y="58" text-anchor="middle" font-size="8" fill="white">ACTIVE</text>
+    <text x="285" y="71" text-anchor="middle" font-size="8" fill="white">SUSPENDED</text>
+    
+    <rect x="330" y="30" width="70" height="50" fill="#9c27b0" stroke="#7b1fa2" stroke-width="1" rx="5"/>
+    <text x="365" y="45" text-anchor="middle" font-size="10" fill="white" font-weight="bold">⭐ Type</text>
+    <text x="365" y="58" text-anchor="middle" font-size="8" fill="white">REGULAR</text>
+    <text x="365" y="71" text-anchor="middle" font-size="8" fill="white">VIP</text>
+    
+    <!-- 관계 표시 -->
+    <line x1="140" y1="55" x2="160" y2="55" stroke="#ad1457" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="140" y1="65" x2="250" y2="55" stroke="#ad1457" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="140" y1="75" x2="330" y2="65" stroke="#ad1457" stroke-width="1" stroke-dasharray="3,3"/>
+  </g>
+  
+  <!-- 주요 데이터 플로우 화살표 -->
+  
+  <!-- 사용자 -> 브라우저 -->
+  <line x1="110" y1="130" x2="130" y2="130" stroke="#1976d2" stroke-width="3" marker-end="url(#blueArrow)"/>
+  
+  <!-- 브라우저 -> 컨트롤러 -->
+  <line x1="250" y1="130" x2="300" y2="130" stroke="#7b1fa2" stroke-width="3" marker-end="url(#purpleArrow)"/>
+  <text x="275" y="125" text-anchor="middle" font-size="9" fill="#7b1fa2" font-weight="bold">HTTP 요청</text>
+  
+  <!-- 컨트롤러 -> Spring Security -->
+  <line x1="600" y1="155" x2="650" y2="155" stroke="#d32f2f" stroke-width="3" marker-end="url(#redArrow)"/>
+  <text x="625" y="150" text-anchor="middle" font-size="9" fill="#d32f2f" font-weight="bold">보안 처리</text>
+  
+  <!-- Spring Security -> 비즈니스 레이어 -->
+  <line x1="1050" y1="230" x2="1100" y2="155" stroke="#388e3c" stroke-width="3" marker-end="url(#greenArrow)"/>
+  <text x="1075" y="190" text-anchor="middle" font-size="9" fill="#388e3c" font-weight="bold">인증 완료</text>
+  
+  <!-- 비즈니스 레이어 -> 데이터 접근 -->
+  <line x1="1350" y1="155" x2="1400" y2="155" stroke="#f57c00" stroke-width="3" marker-end="url(#orangeArrow)"/>
+  <text x="1375" y="150" text-anchor="middle" font-size="9" fill="#f57c00" font-weight="bold">DB 조회</text>
+  
+  <!-- 데이터 접근 -> 데이터베이스 -->
+  <line x1="1475" y1="230" x2="850" y2="420" stroke="#689f38" stroke-width="3" marker-end="url(#lightGreenArrow)"/>
+  <text x="1160" y="330" text-anchor="middle" font-size="9" fill="#689f38" font-weight="bold">SQL 쿼리</text>
+  
+  <!-- 회원가입 플로우 표시 -->
+  <g transform="translate(50, 600)">
+    <rect x="0" y="0" width="700" height="120" fill="#fff8e1" stroke="#ffa000" stroke-width="2" rx="10"/>
+    <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#ef6c00">
+      📝 회원가입 데이터 플로우
+    </text>
+    
+    <circle cx="60" cy="60" r="20" fill="#ffc107" stroke="#ff8f00" stroke-width="2"/>
+    <text x="60" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">1</text>
+    <text x="60" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">폼 입력</text>
+    <text x="60" y="85" text-anchor="middle" font-size="8" fill="#e65100">사용자 정보</text>
+    
+    <circle cx="180" cy="60" r="20" fill="#ffc107" stroke="#ff8f00" stroke-width="2"/>
+    <text x="180" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">2</text>
+    <text x="180" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">유효성 검사</text>
+    <text x="180" y="85" text-anchor="middle" font-size="8" fill="#e65100">@Valid 검증</text>
+    
+    <circle cx="300" cy="60" r="20" fill="#ffc107" stroke="#ff8f00" stroke-width="2"/>
+    <text x="300" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">3</text>
+    <text x="300" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">중복 체크</text>
+    <text x="300" y="85" text-anchor="middle" font-size="8" fill="#e65100">이메일 중복</text>
+    
+    <circle cx="420" cy="60" r="20" fill="#ffc107" stroke="#ff8f00" stroke-width="2"/>
+    <text x="420" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">4</text>
+    <text x="420" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">암호화</text>
+    <text x="420" y="85" text-anchor="middle" font-size="8" fill="#e65100">BCrypt</text>
+    
+    <circle cx="540" cy="60" r="20" fill="#ffc107" stroke="#ff8f00" stroke-width="2"/>
+    <text x="540" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">5</text>
+    <text x="540" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">저장</text>
+    <text x="540" y="85" text-anchor="middle" font-size="8" fill="#e65100">DB INSERT</text>
+    
+    <circle cx="640" cy="60" r="20" fill="#4caf50" stroke="#388e3c" stroke-width="2"/>
+    <text x="640" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">✓</text>
+    <text x="640" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">완료</text>
+    <text x="640" y="85" text-anchor="middle" font-size="8" fill="#2e7d32">로그인 유도</text>
+    
+    <!-- 연결 화살표 -->
+    <line x1="80" y1="60" x2="160" y2="60" stroke="#ef6c00" stroke-width="2" marker-end="url(#yellowArrow)"/>
+    <line x1="200" y1="60" x2="280" y2="60" stroke="#ef6c00" stroke-width="2" marker-end="url(#yellowArrow)"/>
+    <line x1="320" y1="60" x2="400" y2="60" stroke="#ef6c00" stroke-width="2" marker-end="url(#yellowArrow)"/>
+    <line x1="440" y1="60" x2="520" y2="60" stroke="#ef6c00" stroke-width="2" marker-end="url(#yellowArrow)"/>
+    <line x1="560" y1="60" x2="620" y2="60" stroke="#4caf50" stroke-width="2" marker-end="url(#greenArrow)"/>
+  </g>
+  
+  <!-- 로그인 플로우 표시 -->
+  <g transform="translate(800, 600)">
+    <rect x="0" y="0" width="700" height="120" fill="#e8f5e8" stroke="#388e3c" stroke-width="2" rx="10"/>
+    <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e7d32">
+      🔐 로그인 데이터 플로우
+    </text>
+    
+    <circle cx="60" cy="60" r="20" fill="#4caf50" stroke="#388e3c" stroke-width="2"/>
+    <text x="60" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">1</text>
+    <text x="60" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">로그인 요청</text>
+    <text x="60" y="85" text-anchor="middle" font-size="8" fill="#2e7d32">POST 전송</text>
+    
+    <circle cx="180" cy="60" r="20" fill="#4caf50" stroke="#388e3c" stroke-width="2"/>
+    <text x="180" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">2</text>
+    <text x="180" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">필터 체인</text>
+    <text x="180" y="85" text-anchor="middle" font-size="8" fill="#2e7d32">Security 처리</text>
+    
+    <circle cx="300" cy="60" r="20" fill="#4caf50" stroke="#388e3c" stroke-width="2"/>
+    <text x="300" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">3</text>
+    <text x="300" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">사용자 조회</text>
+    <text x="300" y="85" text-anchor="middle" font-size="8" fill="#2e7d32">DB SELECT</text>
+    
+    <circle cx="420" cy="60" r="20" fill="#4caf50" stroke="#388e3c" stroke-width="2"/>
+    <text x="420" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">4</text>
+    <text x="420" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">비밀번호 검증</text>
+    <text x="420" y="85" text-anchor="middle" font-size="8" fill="#2e7d32">BCrypt 매칭</text>
+    
+    <circle cx="540" cy="60" r="20" fill="#4caf50" stroke="#388e3c" stroke-width="2"/>
+    <text x="540" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">5</text>
+    <text x="540" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">세션 생성</text>
+    <text x="540" y="85" text-anchor="middle" font-size="8" fill="#2e7d32">인증 정보</text>
+    
+    <circle cx="640" cy="60" r="20" fill="#2196f3" stroke="#1976d2" stroke-width="2"/>
+    <text x="640" y="50" text-anchor="middle" font-size="8" fill="white" font-weight="bold">✓</text>
+    <text x="640" y="65" text-anchor="middle" font-size="8" fill="white" font-weight="bold">리다이렉트</text>
+    <text x="640" y="85" text-anchor="middle" font-size="8" fill="#1976d2">홈페이지 이동</text>
+    
+    <!-- 연결 화살표 -->
+    <line x1="80" y1="60" x2="160" y2="60" stroke="#2e7d32" stroke-width="2" marker-end="url(#greenArrow)"/>
+    <line x1="200" y1="60" x2="280" y2="60" stroke="#2e7d32" stroke-width="2" marker-end="url(#greenArrow)"/>
+    <line x1="320" y1="60" x2="400" y2="60" stroke="#2e7d32" stroke-width="2" marker-end="url(#greenArrow)"/>
+    <line x1="440" y1="60" x2="520" y2="60" stroke="#2e7d32" stroke-width="2" marker-end="url(#greenArrow)"/>
+    <line x1="560" y1="60" x2="620" y2="60" stroke="#1976d2" stroke-width="2" marker-end="url(#blueArrow)"/>
+  </g>
+  
+  <!-- 보안 특징 요약 -->
+  <g transform="translate(50, 780)">
+    <rect x="0" y="0" width="1500" height="150" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2" rx="10"/>
+    <text x="750" y="20" text-anchor="middle" font-size="16" font-weight="bold" fill="#6a1b9a">
+      🔒 시스템 보안 특징 및 데이터 처리 요약
+    </text>
+    
+    <!-- 보안 특징들 -->
+    <text x="50" y="50" font-size="12" font-weight="bold" fill="#4a148c">🛡️ 보안 계층:</text>
+    <text x="60" y="70" font-size="11" fill="#6a1b9a">• Spring Security Filter Chain 기반 요청 처리</text>
+    <text x="60" y="85" font-size="11" fill="#6a1b9a">• BCrypt 비밀번호 암호화 (솔트 자동 생성)</text>
+    <text x="60" y="100" font-size="11" fill="#6a1b9a">• 세션 기반 인증 상태 관리</text>
+    <text x="60" y="115" font-size="11" fill="#6a1b9a">• 역할 기반 접근 제어 (RBAC)</text>
+    
+    <text x="400" y="50" font-size="12" font-weight="bold" fill="#4a148c">📊 데이터 플로우:</text>
+    <text x="410" y="70" font-size="11" fill="#6a1b9a">• HTTP 요청 → Security Filter → Controller</text>
+    <text x="410" y="85" font-size="11" fill="#6a1b9a">• Controller → Service → Repository → Database</text>
+    <text x="410" y="100" font-size="11" fill="#6a1b9a">• 인증: UserDetailsService → DB 조회 → 검증</text>
+    <text x="410" y="115" font-size="11" fill="#6a1b9a">• 응답: Database → Repository → Service → View</text>
+    
+    <text x="800" y="50" font-size="12" font-weight="bold" fill="#4a148c">🔐 인증 과정:</text>
+    <text x="810" y="70" font-size="11" fill="#6a1b9a">• 1. 사용자 입력 → 2. Security 필터 → 3. DB 조회</text>
+    <text x="810" y="85" font-size="11" fill="#6a1b9a">• 4. 비밀번호 검증 → 5. 세션 생성 → 6. 리다이렉트</text>
+    <text x="810" y="100" font-size="11" fill="#6a1b9a">• 실패 시: 에러 핸들러 → 로그인 페이지</text>
+    <text x="810" y="115" font-size="11" fill="#6a1b9a">• 성공 시: 성공 핸들러 → SavedRequest 또는 홈</text>
+    
+    <text x="1200" y="50" font-size="12" font-weight="bold" fill="#4a148c">⚡ 성능 최적화:</text>
+    <text x="1210" y="70" font-size="11" fill="#6a1b9a">• JPA 연결 풀링 및 캐싱</text>
+    <text x="1210" y="85" font-size="11" fill="#6a1b9a">• 세션 타임아웃 관리</text>
+    <text x="1210" y="100" font-size="11" fill="#6a1b9a">• SQL 쿼리 최적화</text>
+    <text x="1210" y="115" font-size="11" fill="#6a1b9a">• 정적 리소스 캐싱</text>
+  </g>
+  
+  <!-- 화살표 마커들 정의 -->
+  <defs>
+    <marker id="blueArrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1976d2"/>
+    </marker>
+    <marker id="purpleArrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7b1fa2"/>
+    </marker>
+    <marker id="redArrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#d32f2f"/>
+    </marker>
+    <marker id="greenArrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#388e3c"/>
+    </marker>
+    <marker id="orangeArrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f57c00"/>
+    </marker>
+    <marker id="lightGreenArrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#689f38"/>
+    </marker>
+    <marker id="yellowArrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ef6c00"/>
+    </marker>
+  </defs>
+</svg>

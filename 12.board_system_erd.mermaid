@@ -1,0 +1,108 @@
+erDiagram
+    MEMBERS {
+        BIGINT member_id PK "회원 ID"
+        VARCHAR email UK "이메일"
+        VARCHAR password "비밀번호"
+        VARCHAR name "이름"
+        VARCHAR phone "전화번호"
+        VARCHAR address "주소"
+        DATETIME join_date "가입일"
+        ENUM member_type "회원등급"
+        ENUM status "상태"
+        ENUM role "권한"
+        DATETIME created_at "생성일"
+        DATETIME updated_at "수정일"
+    }
+    
+    BOARD_CATEGORIES {
+        BIGINT category_id PK "카테고리 ID"
+        VARCHAR name UK "카테고리명"
+        TEXT description "설명"
+        INT sort_order "정렬순서"
+        BOOLEAN is_active "활성여부"
+        DATETIME created_at "생성일"
+        DATETIME updated_at "수정일"
+    }
+    
+    BOARDS {
+        BIGINT board_id PK "게시글 ID"
+        VARCHAR title "제목"
+        TEXT content "내용"
+        BIGINT member_id FK "작성자 ID"
+        BIGINT category_id FK "카테고리 ID"
+        INT view_count "조회수"
+        INT like_count "추천수"
+        INT comment_count "댓글수"
+        ENUM status "상태"
+        BOOLEAN is_notice "공지여부"
+        BOOLEAN is_pinned "상단고정"
+        DATETIME created_at "작성일"
+        DATETIME updated_at "수정일"
+        DATETIME deleted_at "삭제일"
+    }
+    
+    BOARD_COMMENTS {
+        BIGINT comment_id PK "댓글 ID"
+        BIGINT board_id FK "게시글 ID"
+        BIGINT member_id FK "작성자 ID"
+        BIGINT parent_id FK "부모댓글 ID"
+        TEXT content "내용"
+        INT depth "깊이"
+        INT sort_order "정렬순서"
+        BOOLEAN is_deleted "삭제여부"
+        DATETIME created_at "작성일"
+        DATETIME updated_at "수정일"
+    }
+    
+    BOARD_FILES {
+        BIGINT file_id PK "파일 ID"
+        BIGINT board_id FK "게시글 ID"
+        VARCHAR original_name "원본명"
+        VARCHAR stored_name "저장명"
+        VARCHAR file_path "저장경로"
+        BIGINT file_size "파일크기"
+        VARCHAR content_type "MIME타입"
+        INT download_count "다운로드수"
+        DATETIME created_at "업로드일"
+    }
+    
+    BOARD_LIKES {
+        BIGINT like_id PK "추천 ID"
+        BIGINT board_id FK "게시글 ID"
+        BIGINT member_id FK "회원 ID"
+        ENUM like_type "추천타입"
+        DATETIME created_at "추천일"
+    }
+    
+    BOARD_VIEWS {
+        BIGINT view_id PK "조회 ID"
+        BIGINT board_id FK "게시글 ID"
+        BIGINT member_id FK "회원 ID"
+        VARCHAR ip_address "IP주소"
+        TEXT user_agent "사용자에이전트"
+        DATETIME viewed_at "조회일시"
+    }
+    
+    BOARD_BOOKMARKS {
+        BIGINT bookmark_id PK "북마크 ID"
+        BIGINT board_id FK "게시글 ID"
+        BIGINT member_id FK "회원 ID"
+        DATETIME created_at "생성일"
+    }
+
+    %% 관계 정의
+    MEMBERS ||--o{ BOARDS : "작성"
+    MEMBERS ||--o{ BOARD_COMMENTS : "댓글작성"
+    MEMBERS ||--o{ BOARD_LIKES : "추천"
+    MEMBERS ||--o{ BOARD_VIEWS : "조회"
+    MEMBERS ||--o{ BOARD_BOOKMARKS : "북마크"
+    
+    BOARD_CATEGORIES ||--o{ BOARDS : "분류"
+    
+    BOARDS ||--o{ BOARD_COMMENTS : "댓글"
+    BOARDS ||--o{ BOARD_FILES : "첨부파일"
+    BOARDS ||--o{ BOARD_LIKES : "추천"
+    BOARDS ||--o{ BOARD_VIEWS : "조회"
+    BOARDS ||--o{ BOARD_BOOKMARKS : "북마크"
+    
+    BOARD_COMMENTS ||--o{ BOARD_COMMENTS : "대댓글"

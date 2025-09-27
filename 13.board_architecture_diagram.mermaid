@@ -1,0 +1,156 @@
+graph TB
+    subgraph "🌐 프레젠테이션 계층"
+        subgraph "웹 컨트롤러"
+            BC[📝 BoardController<br/>게시판 화면]
+            BAC[🔌 BoardApiController<br/>게시판 API]
+            CAC[💬 CommentApiController<br/>댓글 API]
+            FAC[📎 FileApiController<br/>파일 API]
+        end
+        
+        subgraph "뷰 템플릿"
+            BL[📋 board/list.html<br/>게시글 목록]
+            BD[📄 board/detail.html<br/>게시글 상세]
+            BW[✏️ board/write.html<br/>게시글 작성]
+            BE[📝 board/edit.html<br/>게시글 수정]
+        end
+        
+        subgraph "정적 리소스"
+            CSS[🎨 CSS 파일]
+            JS[⚡ JavaScript 파일]
+            IMG[🖼️ 이미지 파일]
+        end
+    end
+    
+    subgraph "🛡️ Spring Security 계층"
+        SF[🔒 Security Filter Chain]
+        
+        subgraph "보안 컴포넌트"
+            AA[🔑 Authentication]
+            AZ[🛡️ Authorization]
+            CSRF[🛠️ CSRF Protection]
+            XSS[🚫 XSS Prevention]
+        end
+        
+        subgraph "권한 설정"
+            PA1[📖 게시글 조회: permitAll]
+            PA2[✍️ 게시글 작성: authenticated]
+            PA3[🔧 게시글 수정: owner+admin]
+            PA4[🗑️ 게시글 삭제: owner+admin]
+            PA5[👑 관리 기능: admin only]
+        end
+    end
+    
+    subgraph "💼 비즈니스 계층"
+        subgraph "서비스"
+            BS[📝 BoardService<br/>게시판 비즈니스 로직]
+            CS[💬 CommentService<br/>댓글 비즈니스 로직]
+            FS[📎 FileService<br/>파일 비즈니스 로직]
+            CAS[📁 CategoryService<br/>카테고리 비즈니스 로직]
+            SS[🔍 SearchService<br/>검색 비즈니스 로직]
+        end
+        
+        subgraph "DTO"
+            BD_DTO[📄 BoardDTO]
+            CD_DTO[💬 CommentDTO]
+            FD_DTO[📎 FileDTO]
+            SD_DTO[🔍 SearchDTO]
+            PD_DTO[📄 PageDTO]
+        end
+        
+        subgraph "유틸리티"
+            FU[📁 FileUtil<br/>파일 처리]
+            SU[🔍 SearchUtil<br/>검색 처리]
+            PU[📄 PageUtil<br/>페이징 처리]
+            VU[✅ ValidationUtil<br/>검증 처리]
+        end
+    end
+    
+    subgraph "💾 데이터 접근 계층"
+        subgraph "Repository"
+            BR[📝 BoardRepository]
+            CR[💬 CommentRepository]
+            CAR[📁 CategoryRepository]
+            FR[📎 FileRepository]
+            LR[👍 LikeRepository]
+            VR[👁️ ViewRepository]
+        end
+        
+        subgraph "Custom Repository"
+            BSR[🔍 BoardSearchRepository<br/>복합 검색 쿼리]
+            STA[📊 StatisticsRepository<br/>통계 쿼리]
+        end
+        
+        subgraph "엔티티"
+            BOARD[📝 Board Entity]
+            COMMENT[💬 Comment Entity]
+            CATEGORY[📁 Category Entity]
+            FILE[📎 BoardFile Entity]
+            LIKE[👍 BoardLike Entity]
+            VIEW[👁️ BoardView Entity]
+        end
+    end
+    
+    subgraph "🗄️ 인프라스트럭처 계층"
+        subgraph "데이터베이스"
+            DB[(🗄️ MySQL 8.0<br/>Primary Database)]
+            CACHE[(⚡ Redis<br/>Cache Store)]
+        end
+        
+        subgraph "파일 시스템"
+            LOCAL[💿 Local File System<br/>첨부파일 저장]
+            TEMP[📂 Temp Directory<br/>임시 파일]
+        end
+        
+        subgraph "외부 서비스"
+            EMAIL[📧 Email Service<br/>알림 발송]
+            CLOUD[☁️ Cloud Storage<br/>파일 백업]
+        end
+    end
+    
+    %% 연결 관계
+    BC --> SF
+    BAC --> SF
+    CAC --> SF
+    FAC --> SF
+    
+    SF --> BS
+    SF --> CS
+    SF --> FS
+    SF --> CAS
+    
+    BS --> BR
+    BS --> BSR
+    CS --> CR
+    FS --> FR
+    CAS --> CAR
+    
+    BR --> BOARD
+    CR --> COMMENT
+    CAR --> CATEGORY
+    FR --> FILE
+    LR --> LIKE
+    VR --> VIEW
+    
+    BOARD --> DB
+    COMMENT --> DB
+    CATEGORY --> DB
+    FILE --> DB
+    LIKE --> DB
+    VIEW --> DB
+    
+    FS --> LOCAL
+    BS --> CACHE
+    CS --> EMAIL
+    
+    %% 스타일링
+    classDef presentation fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef security fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef business fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef data fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef infrastructure fill:#fff8e1,stroke:#ffa000,stroke-width:2px
+    
+    class BC,BAC,CAC,FAC,BL,BD,BW,BE,CSS,JS,IMG presentation
+    class SF,AA,AZ,CSRF,XSS,PA1,PA2,PA3,PA4,PA5 security
+    class BS,CS,FS,CAS,SS,BD_DTO,CD_DTO,FD_DTO,SD_DTO,PD_DTO,FU,SU,PU,VU business
+    class BR,CR,CAR,FR,LR,VR,BSR,STA,BOARD,COMMENT,CATEGORY,FILE,LIKE,VIEW data
+    class DB,CACHE,LOCAL,TEMP,EMAIL,CLOUD infrastructure
