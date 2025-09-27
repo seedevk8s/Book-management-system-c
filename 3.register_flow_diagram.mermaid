@@ -1,0 +1,87 @@
+sequenceDiagram
+    participant User as 👤 사용자
+    participant Browser as 🌐 브라우저
+    participant Controller as 🎯 AuthController
+    participant Validation as ✅ Validation
+    participant Service as 💼 MemberService
+    participant Encoder as 🔐 PasswordEncoder
+    participant Repository as 💾 Repository
+    participant Database as 🗄️ Database
+
+    Note over User,Database: 📝 회원가입 프로세스 시작
+
+    %% 1. 회원가입 페이지 요청
+    User->>Browser: 회원가입 페이지 요청
+    Browser->>Controller: GET /auth/register
+    Controller->>Browser: register.html 반환
+    Browser->>User: 회원가입 폼 표시
+
+    %% 2. 회원가입 정보 제출
+    User->>Browser: 회원 정보 입력 및 제출
+    Browser->>Controller: POST /auth/register + MemberDTO
+    
+    %% 3. 유효성 검사
+    Controller->>Validation: @Valid MemberDTO 검증
+    
+    alt 유효성 검사 통과
+        Validation-->>Controller: 검증 성공
+        
+        %% 4. 비밀번호 확인 검사
+        Controller->>Controller: 비밀번호 확인 검사
+        
+        alt 비밀번호 일치
+            %% 5. 이메일 중복 검사
+            Controller->>Service: existsByEmail(email)
+            Service->>Repository: existsByEmail(email)
+            Repository->>Database: SELECT COUNT(*) FROM members WHERE email = ?
+            
+            alt 이메일 중복 없음
+                Database-->>Repository: 0 (중복 없음)
+                Repository-->>Service: false
+                Service-->>Controller: false (사용 가능)
+                
+                %% 6. 회원 정보 생성 및 저장
+                Controller->>Controller: Member 엔티티 생성
+                Controller->>Service: register(member)
+                Service->>Service: 이메일 중복 재확인
+                Service->>Encoder: encode(password)
+                Encoder-->>Service: 암호화된 비밀번호
+                Service->>Service: 기본값 설정 (Role, Status, Type)
+                Service->>Repository: save(member)
+                Repository->>Database: INSERT INTO members (...)
+                
+                alt 저장 성공
+                    Database-->>Repository: 저장된 Member 반환
+                    Repository-->>Service: Member 객체 반환
+                    Service-->>Controller: 저장된 Member 반환
+                    Controller-->>Browser: 로그인 페이지 리다이렉트 (성공 메시지)
+                    Browser->>User: "회원가입 완료" 메시지와 로그인 폼 표시
+                    
+                else 저장 실패
+                    Database-->>Repository: SQLException
+                    Repository-->>Service: Exception
+                    Service-->>Controller: Exception
+                    Controller-->>Browser: register.html (오류 메시지)
+                    Browser->>User: "회원가입 중 오류 발생" 메시지
+                end
+                
+            else 이메일 중복
+                Database-->>Repository: 1 (중복 존재)
+                Repository-->>Service: true
+                Service-->>Controller: true (중복)
+                Controller-->>Browser: register.html (중복 오류)
+                Browser->>User: "이미 사용 중인 이메일" 메시지
+            end
+            
+        else 비밀번호 불일치
+            Controller-->>Browser: register.html (비밀번호 오류)
+            Browser->>User: "비밀번호가 일치하지 않습니다" 메시지
+        end
+        
+    else 유효성 검사 실패
+        Validation-->>Controller: BindingResult (오류 정보)
+        Controller-->>Browser: register.html (유효성 오류)
+        Browser->>User: 필드별 오류 메시지 표시
+    end
+
+    Note over User,Database: 🏁 회원가입 프로세스 완료

@@ -1,0 +1,62 @@
+sequenceDiagram
+    participant User as 👤 사용자
+    participant Browser as 🌐 브라우저
+    participant Security as 🔒 Spring Security
+    participant LogoutFilter as 🚪 LogoutFilter
+    participant LogoutHandler as 🔧 CustomLogoutHandler
+    participant Session as 📊 HttpSession
+    participant SuccessHandler as ✅ LogoutSuccessHandler
+
+    Note over User,SuccessHandler: 🚪 로그아웃 프로세스 시작
+
+    %% 1. 로그아웃 요청
+    User->>Browser: 로그아웃 버튼 클릭
+    Browser->>Security: POST /auth/logout
+    
+    Note over Security: 🔍 Spring Security 로그아웃 필터 체인 시작
+    
+    %% 2. 로그아웃 필터 실행
+    Security->>LogoutFilter: 로그아웃 요청 매칭 확인
+    LogoutFilter->>LogoutFilter: AntPathRequestMatcher 검증
+    
+    alt 로그아웃 URL 매칭
+        Note over LogoutFilter: ✅ /auth/logout 매칭 성공
+        
+        %% 3. 커스텀 로그아웃 핸들러 실행
+        LogoutFilter->>LogoutHandler: logout(request, response, authentication)
+        LogoutHandler->>LogoutHandler: 로그아웃 정보 로깅
+        LogoutHandler->>LogoutHandler: 세션 정보 수집
+        LogoutHandler->>LogoutHandler: 사용자 정보 로깅
+        LogoutHandler-->>LogoutFilter: 로그아웃 처리 완료
+        
+        %% 4. Spring Security 기본 로그아웃 처리
+        LogoutFilter->>Session: invalidateHttpSession()
+        Session->>Session: 세션 데이터 완전 삭제
+        Session-->>LogoutFilter: 세션 무효화 완료
+        
+        LogoutFilter->>Browser: JSESSIONID 쿠키 삭제
+        Browser->>Browser: 쿠키 제거
+        
+        %% 5. 로그아웃 성공 핸들러 실행
+        LogoutFilter->>SuccessHandler: onLogoutSuccess(request, response, authentication)
+        SuccessHandler->>SuccessHandler: 로그아웃 완료 로깅
+        SuccessHandler->>SuccessHandler: 세션 정리 확인
+        SuccessHandler->>SuccessHandler: 리다이렉트 URL 결정
+        SuccessHandler-->>Browser: 로그인 페이지 리다이렉트
+        
+        %% 6. 최종 응답
+        Browser->>Browser: SecurityContext 정리
+        Browser->>User: 로그인 페이지 표시 (로그아웃 성공 메시지)
+        
+    else URL 매칭 실패
+        Note over LogoutFilter: ❌ 잘못된 로그아웃 URL
+        LogoutFilter-->>Browser: 404 Not Found
+        Browser->>User: 오류 페이지 표시
+    end
+
+    Note over User,SuccessHandler: 🏁 로그아웃 프로세스 완료
+
+    %% 추가 설명 박스
+    Note over Session: 📝 세션 무효화 상세:<br/>- 모든 세션 속성 삭제<br/>- 세션 ID 무효화<br/>- 서버 메모리에서 제거
+    
+    Note over Browser: 🍪 쿠키 삭제 상세:<br/>- JSESSIONID 쿠키 제거<br/>- 브라우저 캐시 정리<br/>- 클라이언트 측 정보 삭제

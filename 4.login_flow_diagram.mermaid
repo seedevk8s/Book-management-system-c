@@ -1,0 +1,76 @@
+sequenceDiagram
+    participant User as 👤 사용자
+    participant Browser as 🌐 브라우저
+    participant Controller as 🎯 AuthController
+    participant Security as 🔒 Spring Security
+    participant UserService as 👤 UserDetailsService
+    participant Service as 💼 MemberService
+    participant Repository as 💾 Repository
+    participant Database as 🗄️ Database
+    participant Handler as ✅ Success Handler
+
+    Note over User,Database: 🔐 로그인 프로세스 시작
+
+    %% 1. 로그인 페이지 요청
+    User->>Browser: 로그인 페이지 요청
+    Browser->>Controller: GET /auth/login
+    Controller->>Browser: login.html 반환
+    Browser->>User: 로그인 폼 표시
+
+    %% 2. 로그인 정보 제출
+    User->>Browser: 이메일/비밀번호 입력
+    Browser->>Security: POST /auth/login
+    
+    Note over Security: 🔍 Spring Security 필터 체인 시작
+
+    %% 3. 사용자 정보 조회
+    Security->>UserService: loadUserByUsername(email)
+    UserService->>Service: findByEmail(email)
+    Service->>Repository: findByEmail(email)
+    Repository->>Database: SELECT * FROM members WHERE email = ?
+    
+    alt 사용자 존재
+        Database-->>Repository: Member 데이터 반환
+        Repository-->>Service: Member 객체 반환
+        Service-->>UserService: Member 객체 반환
+        UserService->>UserService: 계정 상태 확인
+        
+        alt 계정 활성화
+            UserService-->>Security: UserDetails(Member) 반환
+            
+            %% 4. 비밀번호 검증
+            Security->>Security: BCrypt 비밀번호 검증
+            
+            alt 비밀번호 일치
+                Note over Security: ✅ 인증 성공
+                Security->>Handler: onAuthenticationSuccess()
+                Handler->>Handler: 세션 생성 및 정보 저장
+                Handler->>Handler: 리다이렉트 URL 결정
+                Handler-->>Browser: 리다이렉트 응답
+                Browser->>User: 홈페이지 또는 원래 요청 페이지 표시
+                
+            else 비밀번호 불일치
+                Note over Security: ❌ 인증 실패 (비밀번호)
+                Security->>Security: AuthenticationFailureHandler 실행
+                Security-->>Browser: 로그인 페이지 리다이렉트 (오류 포함)
+                Browser->>User: 오류 메시지와 함께 로그인 폼 표시
+            end
+            
+        else 계정 비활성화
+            Note over UserService: ❌ 계정 상태 오류
+            UserService-->>Security: UsernameNotFoundException
+            Security-->>Browser: 로그인 페이지 리다이렉트 (오류 포함)
+            Browser->>User: 오류 메시지와 함께 로그인 폼 표시
+        end
+        
+    else 사용자 없음
+        Database-->>Repository: 결과 없음
+        Repository-->>Service: Optional.empty()
+        Service-->>UserService: UsernameNotFoundException
+        Note over UserService: ❌ 사용자 없음
+        UserService-->>Security: UsernameNotFoundException
+        Security-->>Browser: 로그인 페이지 리다이렉트 (오류 포함)
+        Browser->>User: 오류 메시지와 함께 로그인 폼 표시
+    end
+
+    Note over User,Database: 🏁 로그인 프로세스 완료

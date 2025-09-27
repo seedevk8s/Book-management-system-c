@@ -1,0 +1,91 @@
+graph TB
+    subgraph "클라이언트 계층"
+        Client[👤 웹 브라우저]
+        Forms[📝 로그인/회원가입 폼]
+    end
+
+    subgraph "프레젠테이션 계층"
+        AC[🎯 AuthController]
+        HC[🏠 HomeController]
+        MC[👥 MemberController]
+    end
+
+    subgraph "Spring Security 계층"
+        SF[🔒 Security Filter Chain]
+        AP[🔐 Authentication Provider]
+        UDS[👤 UserDetailsService]
+        ASH[✅ Success Handler]
+        AFH[❌ Failure Handler]
+        LH[🚪 Logout Handler]
+        LSH[🔓 Logout Success Handler]
+    end
+
+    subgraph "서비스 계층"
+        MS[👥 Member Service]
+        CUDS[🔍 Custom UserDetails Service]
+    end
+
+    subgraph "데이터 접근 계층"
+        MR[💾 Member Repository]
+        DB[(🗄️ Database)]
+    end
+
+    subgraph "도메인 계층"
+        M[👤 Member Entity]
+        R[🔑 Role Enum]
+        MS2[📊 MemberStatus Enum]
+        MT[⭐ MemberType Enum]
+    end
+
+    subgraph "보안 설정"
+        SC[⚙️ Security Config]
+        PE[🔐 Password Encoder]
+        AM[🎫 Authentication Manager]
+    end
+
+    %% 요청 흐름
+    Client --> Forms
+    Forms --> AC
+    AC --> SF
+    SF --> AP
+    AP --> UDS
+    UDS --> CUDS
+    CUDS --> MS
+    MS --> MR
+    MR --> DB
+
+    %% 성공/실패 처리
+    AP --> ASH
+    AP --> AFH
+    SF --> LH
+    SF --> LSH
+
+    %% 설정 관계
+    SC --> SF
+    SC --> AP
+    SC --> PE
+    SC --> AM
+    AP --> PE
+    AP --> UDS
+
+    %% 도메인 관계
+    MS --> M
+    M --> R
+    M --> MS2
+    M --> MT
+    CUDS --> M
+
+    %% 스타일링
+    classDef controller fill:#e1f5fe
+    classDef security fill:#fff3e0
+    classDef service fill:#f3e5f5
+    classDef repository fill:#e8f5e8
+    classDef entity fill:#fff8e1
+    classDef config fill:#fce4ec
+
+    class AC,HC,MC controller
+    class SF,AP,UDS,ASH,AFH,LH,LSH security
+    class MS,CUDS service
+    class MR repository
+    class M,R,MS2,MT entity
+    class SC,PE,AM config
